@@ -1,6 +1,6 @@
 import React from 'react'
 import StopCard from './StopCard'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Card } from 'semantic-ui-react'
 
 class SidebarContainer extends React.Component {
 
@@ -11,9 +11,21 @@ class SidebarContainer extends React.Component {
     }
     render(){
         return(
-            <Segment.Group>
-                {this.renderStops()}
-            </Segment.Group>
+            <div>
+                {
+                    this.props.selectedStop ? 
+                        <Card
+                            content={this.props.selectedStop.name}>
+                        </Card>
+                    :
+                    null
+                }
+
+                <Segment.Group>
+                    {this.renderStops()}
+                </Segment.Group>
+                
+            </div>
         )
     }
 }

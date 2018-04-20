@@ -1,20 +1,54 @@
 import React from 'react'
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 // e05cfc65-e417-4bd6-a48b-859486e2adf6 
 import { Container } from 'semantic-ui-react'
 
 class MapContainer extends React.Component{
 
-    state={}
+    state= {
+        showingInfoWindow: false,
+        zoom: 14
+
+    }
 
     componentDidMount(){
         this.createMarkers()
     }
 
     onClick = (props, marker, e) => {
-        this.setState({selected: props.title, distance: props.name})
-        
+        this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow})
+    
+        this.props.stops.forEach(stop => {
+            if(stop.name === props.title) {
+
+             this.props.selectStop(stop)
+
+            }
+        })
     }
+
+    
+
+
+    renderInfoWindows = () => {
+
+        if(this.props.selectStop)
+        {
+        return(
+            <InfoWindow
+                marker={this.state.activeMarker}
+                visible={true}
+                >
+                <div>
+                    <h1>asdfdsafdsa</h1>
+                </div>
+            </InfoWindow>
+        )
+    }
+
+    }
+
+   
 
     createMarkers = () => {
 
@@ -29,25 +63,21 @@ class MapContainer extends React.Component{
         })
 
         this.setState({markers: markers})
-
     }
 
     render(){
         return(
             <div>
                 <Map google={this.props.google} 
-                    zoom={14}
+                    zoom={this.state.zoom}
                     style={{width:"95%", height: "95%"}}
-                    initialCenter={{ lat: 37.7257, lng: -122.4511 }}
-                >
+                    initialCenter={{ lat: 37.7257, lng: -122.4511 }}>
                 {this.state.markers}
+                {this.renderInfoWindows()}
+
                 </Map>
-                {
-                    this.state.selected && this.state.distance ?
-                        alert(this.state.selected)
-                    :
-                        null
-                }
+
+              
             </div>
         )
     }

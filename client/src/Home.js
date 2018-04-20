@@ -20,28 +20,54 @@ class Home extends React.Component {
 
     }
 
-
-    render(){
-        if(this.state.closeStops)
+    renderHomeComponents = () => {
+       if(this.state.closeStops && this.state.selectedStop){
+            return(
+                <Container style={{padding: "20px"}}>
+                <Grid divided style={{height:"95vh"}} columns={2}>
+                    <Grid.Column width={3} >
+                        <Input fluid placeholder={"Enter a SF Address"} />
+                        <SidebardContainer selectedStop={this.state.selectedStop} 
+                                           selectStop={this.selectStop} 
+                                           stops={this.state.closeStops}/>
+                    </Grid.Column>
+                    <Grid.Column  width={13} >
+                        <MapContainer selectedStop={this.state.selectedStop} 
+                                      selectStop={this.selectStop} 
+                                      stops={this.state.closeStops} />
+                    </Grid.Column>
+                </Grid>
+            </Container>
+            )
+        }else if(this.state.closeStops)
         {
             return(
                 <Container style={{padding: "20px"}}>
                     <Grid divided style={{height:"95vh"}} columns={2}>
                         <Grid.Column width={3} >
                             <Input fluid placeholder={"Enter a SF Address"} />
-                            <SidebardContainer stops={this.state.closeStops}/>
+                            <SidebardContainer selectStop={this.selectStop} stops={this.state.closeStops}/>
                         </Grid.Column>
                         <Grid.Column  width={13} >
-                            <MapContainer stops={this.state.closeStops} />
+                            <MapContainer selectStop={this.selectStop} stops={this.state.closeStops} />
                         </Grid.Column>
                     </Grid>
                 </Container>
             )
+
         }else{
             return(
-                <h1>Loading...</h1>
+                <h1>Loading ...</h1>
             )
         }
+    }
+    selectStop = (stop) => {
+        this.setState({selectedStop: stop})
+    }
+
+
+    render(){
+        return (this.renderHomeComponents())
     }
 }
 export default Home
