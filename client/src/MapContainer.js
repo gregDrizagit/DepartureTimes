@@ -1,6 +1,7 @@
 import React from 'react'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 // e05cfc65-e417-4bd6-a48b-859486e2adf6 
+import { Container } from 'semantic-ui-react'
 
 class MapContainer extends React.Component{
 
@@ -36,6 +37,7 @@ class MapContainer extends React.Component{
             <div>
                 <Map google={this.props.google} 
                     zoom={14}
+                    style={{width:"95%", height: "95%"}}
                     initialCenter={{ lat: 37.7257, lng: -122.4511 }}
                 >
                 {this.state.markers}
