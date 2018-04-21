@@ -19,7 +19,7 @@ class Utils {
     
     static findStationsBelowThreshhold(stations){
 
-        const threshold = 0.2; 
+        const threshold = 1; 
        const filteredStations = stations.filter(station =>{
            return station.distance < threshold
        })
@@ -52,7 +52,7 @@ class Utils {
 
         const closeStations = this.findStationsBelowThreshhold(distancesBetweenUserAndStop); 
 
-        const sorted = this.sortClosestStations(closeStations);
+        const sorted = this.sortClosestStations(distancesBetweenUserAndStop);
 
         return sorted; 
         

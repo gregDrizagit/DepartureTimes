@@ -7,14 +7,27 @@ import { Container, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
 
-    state = {}
+    state = {
+       userLocation: {
+           lat:  37.7257,
+           lon: -122.4511
+       },
+       mapFocus: {
+           lat: 37.7257, 
+           lon: -122.4511
+       }
+
+
+    }
 
     componentDidMount(){
         Adapter.getStops().then(resp => {
+            console.log(resp)
             this.setState({stops: resp.Contents.dataObjects.ScheduledStopPoint})
         }).then(() => {
-             let closeStops = Utils.computeClosestStation({lat: 37.7257 , lon: -122.4511}, this.state.stops)
+             let closeStops = Utils.computeClosestStation({lat: this.state.userLocation.lat , lon: this.state.userLocation.lon}, this.state.stops)
              this.setState({closeStops: closeStops}); 
+             console.log(this.state)
             }
         )
 
@@ -27,12 +40,16 @@ class Home extends React.Component {
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={3} >
                         <Input fluid placeholder={"Enter a SF Address"} />
-                        <SidebardContainer selectedStop={this.state.selectedStop} 
+                        <SidebardContainer 
+                                           selectedStop={this.state.selectedStop} 
                                            selectStop={this.selectStop} 
                                            stops={this.state.closeStops}/>
                     </Grid.Column>
                     <Grid.Column  width={13} >
-                        <MapContainer selectedStop={this.state.selectedStop} 
+                        <MapContainer userLocation={this.state.userLocation}
+                                      zoom ={this.state.zoom}
+                                      mapFocus={this.state.mapFocus} 
+                                      selectedStop={this.state.selectedStop} 
                                       selectStop={this.selectStop} 
                                       stops={this.state.closeStops} />
                     </Grid.Column>
@@ -49,7 +66,11 @@ class Home extends React.Component {
                             <SidebardContainer selectStop={this.selectStop} stops={this.state.closeStops}/>
                         </Grid.Column>
                         <Grid.Column  width={13} >
-                            <MapContainer selectStop={this.selectStop} stops={this.state.closeStops} />
+                            <MapContainer userLocation={this.state.userLocation}
+                                          mapFocus={this.state.mapFocus}
+                                          zoom={this.state.zoom}
+                                          selectStop={this.selectStop} 
+                                          stops={this.state.closeStops} />
                         </Grid.Column>
                     </Grid>
                 </Container>
@@ -62,7 +83,10 @@ class Home extends React.Component {
         }
     }
     selectStop = (stop) => {
-        this.setState({selectedStop: stop})
+        console.log(stop)
+        const newFocusPosition = {lat: parseFloat(stop.lat), lon: parseFloat(stop.lon)}
+        this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 28})
+        Adapter.getDepartureTimesForStop(stop.id)
     }
 
 

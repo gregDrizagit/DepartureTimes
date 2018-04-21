@@ -1,22 +1,26 @@
 import React from 'react'
-import {Map, Marker, InfoWindow, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, InfoWindow, Polyline, GoogleApiWrapper} from 'google-maps-react';
 // e05cfc65-e417-4bd6-a48b-859486e2adf6 
 import { Container } from 'semantic-ui-react'
+
+
 
 class MapContainer extends React.Component{
 
     state= {
         showingInfoWindow: false,
-        zoom: 14
+        zoom: this.props.zoom
 
     }
+
+   
 
     componentDidMount(){
         this.createMarkers()
     }
 
     onClick = (props, marker, e) => {
-        this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow})
+        this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow, zoom: 18})
     
         this.props.stops.forEach(stop => {
             if(stop.name === props.title) {
@@ -32,7 +36,7 @@ class MapContainer extends React.Component{
 
     renderInfoWindows = () => {
 
-        if(this.props.selectStop)
+        if(this.props.selectedStop)
         {
         return(
             <InfoWindow
@@ -40,7 +44,7 @@ class MapContainer extends React.Component{
                 visible={true}
                 >
                 <div>
-                    <h1>asdfdsafdsa</h1>
+                    <h3>{this.props.selectedStop.name} - {this.props.selectedStop.distance} miles away</h3>
                 </div>
             </InfoWindow>
         )
@@ -66,14 +70,29 @@ class MapContainer extends React.Component{
     }
 
     render(){
+        
         return(
             <div>
                 <Map google={this.props.google} 
-                    zoom={this.state.zoom}
+                    zoom={this.props.zoom}
                     style={{width:"95%", height: "95%"}}
-                    initialCenter={{ lat: 37.7257, lng: -122.4511 }}>
-                {this.state.markers}
-                {this.renderInfoWindows()}
+                    initialCenter={ {lat: this.props.userLocation.lat , 
+                                     lng: this.props.userLocation.lon}}
+                    center={{lat: this.props.mapFocus.lat, lng: this.props.mapFocus.lon}}
+                                     >
+                    
+                    <Marker
+                         name={'Your position'}
+                         position={{lat: this.props.userLocation.lat, lng: this.props.userLocation.lon}}
+                         icon={{
+                         url: "https://fonts.googleapis.com/icon?family=Material+Icons",
+                         anchor: new this.props.google.maps.Point(32,32),
+                         scaledSize: new this.props.google.maps.Size(64,64)
+                        }} />
+
+                    {this.state.markers}
+                    {this.renderInfoWindows()}
+
 
                 </Map>
 
@@ -84,5 +103,7 @@ class MapContainer extends React.Component{
 }
 
 export default GoogleApiWrapper({
-    apiKey: ("AIzaSyDO0hnqbkqmrcIW8AgORQWh-8ogRnT3rqY")
+    apiKey: ("AIzaSyDO0hnqbkqmrcIW8AgORQWh-8ogRnT3rqY"),
+    libraries: ['places']
+
   })(MapContainer)

@@ -65,7 +65,7 @@ const Stop = bookshelf.Model.extend({
 //   },
 // });
 
-// exports.Artists = Artists;
+exports.Stop = Stops;
 // exports.Albums = Albums;
 // exports.Genres = Genres;
 // exports.Tracks = Tracks;
@@ -73,96 +73,27 @@ const Stop = bookshelf.Model.extend({
 
 // // ***** Server ***** //
 
-app.get('/artist/:id', (req,res) => {
-  Artist
-    .forge({id: req.params.id})
-    .fetch()
-    .then((artist) => {
-      if (_.isEmpty(artist)) {
-        return res.sendStatus(404);
-      }
-      res.send(artist);
-    })
-    .catch((error) => {
-      console.error(error);
-      return res.sendStatus(500);
-    });
+app.post('/stops', (req,res) => {
+  console.log(req)
+  res.send("hello")
 });
 
-app.post('/artist', (req, res) => {
-  if (_.isEmpty(req.body)) {
-    return res.sendStatus(400);
-  }
-  Artist
-    .forge(req.body)
-    .save()
-    .then((usr) => {
-      res.send({id: artist.id});
-    })
-    .catch((error) => {
-      console.error(error);
-      return res.sendStatus(500);
-    });
-});
 
-app.post('/artist', (req, res) => {
-    if (_.isEmpty(req.body)) {
-      return res.sendStatus(400);
-    }
-    Artist
-      .forge(req.body)
-      .save()
-      .then((usr) => {
-        res.send({id: artist.id});
-      })
-      .catch((error) => {
-        console.error(error);
-        return res.sendStatus(500);
-      });
-  });
-  app.post('/album', (req, res) => {
-    if (_.isEmpty(req.body)) {
-      return res.sendStatus(400);
-    }
-    Album
-      .forge(req.body)
-      .save()
-      .then((album) => {
-        res.send({id: album.id});
-      })
-      .catch((error) => {
-        console.error(error);
-        return res.sendStatus(500);
-      });
-  });
-
-  app.post('/track', (req, res) => {
-    if (_.isEmpty(req.body)) {
-      return res.sendStatus(400);
-    }
-    Track
-      .forge(req.body)
-      .save()
-      .then((album) => {
-        res.send({id: track.id});
-      })
-      .catch((error) => {
-        console.error(error);
-        return res.sendStatus(500);
-      });
-  });
-
-app.get('/tracks', (req, res) => {
-  Tracks
-    .collection()
-    .fetch()
-    .then((tracks) => {
-      res.send(tracks);
-    })
-    .catch((error) => {
-      res.sendStatus(100);
-    });
-});
+  // app.post('/stops', (req, res) => {
+  //   if (_.isEmpty(req.body)) {
+  //     return res.sendStatus(400);
+  //   }
+  //   Album
+  //     .forge(req.body)
+  //     .save()
+  //     .then((album) => {
+  //       res.send({id: album.id});
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       return res.sendStatus(500);
+  //     });
+  // });
 
 ///////SPOTIFY AUTH////////
 
