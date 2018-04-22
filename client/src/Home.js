@@ -83,10 +83,8 @@ class Home extends React.Component {
         }
     }
     selectStop = (stop) => {
-        console.log(stop)
         const newFocusPosition = {lat: parseFloat(stop.lat), lon: parseFloat(stop.lon)}
-        this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 28})
-        Adapter.getDepartureTimesForStop(stop.id)
+        this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 20})
     }
 
 

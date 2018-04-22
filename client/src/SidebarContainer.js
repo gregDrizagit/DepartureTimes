@@ -1,8 +1,24 @@
 import React from 'react'
 import StopCard from './StopCard'
-import { Segment, Card } from 'semantic-ui-react'
+import DeparturesContainer from './DeparturesContainer'
+import Adapter from './Adapter'
+import { Segment, Button, Card } from 'semantic-ui-react'
 
 class SidebarContainer extends React.Component {
+
+    state={
+        showingDepartureTimes: false
+    }
+
+    showDepartureTimes = () => {
+        this.setState({showingDepartureTimes: !this.state.showingDepartureTimes})
+    }
+
+    getDepartureTimes = () => {
+
+        
+
+    }
 
     renderStops = () => {
 
@@ -14,17 +30,26 @@ class SidebarContainer extends React.Component {
             <div>
                 {
                     this.props.selectedStop ? 
-                        <Card
-                            content={this.props.selectedStop.name}>
-                        </Card>
+                        <div>
+                            <Card
+                                content={this.props.selectedStop.name}>
+                            </Card>
+                            <Button onClick={() => this.showDepartureTimes()}>Departure Times</Button>
+                        </div>
                     :
                     null
                 }
-
-                <Segment.Group>
-                    {this.renderStops()}
-                </Segment.Group>
+                {
+                    this.state.showingDepartureTimes ?
+                        <DeparturesContainer selectedStop={this.props.selectedStop} />
+                    :
+                        <Segment.Group>
+                            {this.renderStops()}
+                        </Segment.Group>
                 
+
+                }
+               
             </div>
         )
     }
