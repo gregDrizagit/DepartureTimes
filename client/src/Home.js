@@ -16,11 +16,11 @@ class Home extends React.Component {
            lat: 37.7257, 
            lon: -122.4511
        }
-
-
+      
     }
 
     componentDidMount(){
+
         Adapter.getStops().then(resp => {
             console.log(resp)
             this.setState({stops: resp.Contents.dataObjects.ScheduledStopPoint})
@@ -40,9 +40,9 @@ class Home extends React.Component {
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={3} >
                         <Input fluid placeholder={"Enter a SF Address"} />
-                        <SidebardContainer 
-                                           selectedStop={this.state.selectedStop} 
+                        <SidebardContainer selectedStop={this.state.selectedStop} 
                                            selectStop={this.selectStop} 
+                                           trackVehicle={this.trackVehicle}
                                            stops={this.state.closeStops}/>
                     </Grid.Column>
                     <Grid.Column  width={13} >
@@ -63,11 +63,13 @@ class Home extends React.Component {
                     <Grid divided style={{height:"95vh"}} columns={2}>
                         <Grid.Column width={3} >
                             <Input fluid placeholder={"Enter a SF Address"} />
-                            <SidebardContainer selectStop={this.selectStop} stops={this.state.closeStops}/>
+                            <SidebardContainer selectStop={this.selectStop} 
+                                                stops={this.state.closeStops}/>
                         </Grid.Column>
                         <Grid.Column  width={13} >
                             <MapContainer userLocation={this.state.userLocation}
                                           mapFocus={this.state.mapFocus}
+                                          vehicleLocation={this.state.vehicleLocation}
                                           zoom={this.state.zoom}
                                           selectStop={this.selectStop} 
                                           stops={this.state.closeStops} />
@@ -82,9 +84,12 @@ class Home extends React.Component {
             )
         }
     }
+
+    
+
     selectStop = (stop) => {
         const newFocusPosition = {lat: parseFloat(stop.lat), lon: parseFloat(stop.lon)}
-        this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 20})
+        this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 18})
     }
 
 

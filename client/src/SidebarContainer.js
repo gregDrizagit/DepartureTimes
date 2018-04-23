@@ -22,7 +22,7 @@ class SidebarContainer extends React.Component {
 
     renderStops = () => {
 
-        const stopCards = this.props.stops.map(stop => <StopCard stop={stop} />)
+        const stopCards = this.props.stops.map(stop => <StopCard selectStop={this.props.selectStop} stop={stop} />)
         return stopCards
     }
     render(){
@@ -32,7 +32,8 @@ class SidebarContainer extends React.Component {
                     this.props.selectedStop ? 
                         <div>
                             <Card
-                                content={this.props.selectedStop.name}>
+                                content={this.props.selectedStop.name}
+                                description={this.props.selectedStop.distance}>
                             </Card>
                             <Button onClick={() => this.showDepartureTimes()}>Departure Times</Button>
                         </div>

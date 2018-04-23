@@ -2,15 +2,32 @@ import React from 'react'
 import DepartureCard from './DepartureCard'
 import Adapter from './Adapter'
 import { Segment } from 'semantic-ui-react'
+import {connect} from 'react-redux'
 
 class DeparturesContainer extends React.Component {
 
     state = {}
+
     componentDidMount(){
         console.log("mounted")
         Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
-            this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit})
+            this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit},
+            this.monitorStop())
         })
+
+    }
+
+    monitorStop = () => {
+
+        setInterval(() => {
+            Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
+                this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit})
+            })
+        }, 60000)
+    }
+
+    dispatchVehicleLocation = () => {
+
 
     }
 
@@ -29,6 +46,7 @@ class DeparturesContainer extends React.Component {
                     {this.renderDepartureCards()}
                 </Segment.Group>
             )
+
         }else{
             return(
                 <h4>Loading...</h4>
@@ -36,4 +54,4 @@ class DeparturesContainer extends React.Component {
         }
     }
 }
-export default DeparturesContainer
+export default connect(dispatchVehicleLocation)(DeparturesContainer)

@@ -31,6 +31,12 @@ class MapContainer extends React.Component{
         })
     }
 
+    renderVehicle = () => {
+
+
+
+    }
+
     
 
 
@@ -70,7 +76,7 @@ class MapContainer extends React.Component{
     }
 
     render(){
-        
+
         return(
             <div>
                 <Map google={this.props.google} 
@@ -78,25 +84,22 @@ class MapContainer extends React.Component{
                     style={{width:"95%", height: "95%"}}
                     initialCenter={ {lat: this.props.userLocation.lat , 
                                      lng: this.props.userLocation.lon}}
-                    center={{lat: this.props.mapFocus.lat, lng: this.props.mapFocus.lon}}
-                                     >
+                    center={{lat: this.props.mapFocus.lat, lng: this.props.mapFocus.lon}}>
                     
                     <Marker
                          name={'Your position'}
                          position={{lat: this.props.userLocation.lat, lng: this.props.userLocation.lon}}
                          icon={{
-                         url: "https://fonts.googleapis.com/icon?family=Material+Icons",
+                         url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
                          anchor: new this.props.google.maps.Point(32,32),
-                         scaledSize: new this.props.google.maps.Size(64,64)
+                         scaledSize: new this.props.google.maps.Size(32,32)
                         }} />
 
-                    {this.state.markers}
+                    
                     {this.renderInfoWindows()}
-
-
+                    {this.state.markers}
                 </Map>
 
-              
             </div>
         )
     }

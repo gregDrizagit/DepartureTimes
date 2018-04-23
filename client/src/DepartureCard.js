@@ -12,10 +12,12 @@ class DepartureCard extends React.Component{
         return Math.round(minutesAway)
     }
 
+   
     render(){
+        const departure = this.props.departure.MonitoredVehicleJourney
         return(
-            <Segment>
-                <h4>Line {this.props.LineRef} - {this.calculateMinutesAway()} mins.</h4>
+            <Segment onClick ={()=> this.monitorVehicle(departure) }>
+                <h4>Line {departure.LineRef} - {this.calculateMinutesAway()} mins.</h4>
             </Segment>
         )
     }

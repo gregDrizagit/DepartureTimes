@@ -12,15 +12,11 @@ class Adapter {
         .then(resp => resp.text()).then(text => JSON.parse(text))
     }
 
-    static getStopTimetable (stopCode) {
-
-        return fetch(`http://api.511.org/transit/stoptimetable?api_key=${oldToken}&MonitoringRef=${stopCode}&OperatorRef=SF`,{
-            method: "GET"
-        })
-        .then(resp => console.log(resp))
-        
+    
+    static monitorVehicle (vehicleId) {
+        return fetch(`http://api.511.org/transit/VehicleMonitoring?api_key={yourkey}&agency=AC&vehicleID=${vehicleId}`)
+        .then(resp => resp.text()).then(text => JSON.parse(text))
     }
-    // 58772
 }
 
 export default Adapter
