@@ -3,10 +3,12 @@ import DepartureCard from './DepartureCard'
 import Adapter from './Adapter'
 import { Segment } from 'semantic-ui-react'
 import {connect} from 'react-redux'
-
+import {addVehicle} from './actions'
 class DeparturesContainer extends React.Component {
 
-    state = {}
+    state = {
+
+    }
 
     componentDidMount(){
         console.log("mounted")
@@ -21,15 +23,22 @@ class DeparturesContainer extends React.Component {
 
         setInterval(() => {
             Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
+                this.dispatchDepartures(departures)
                 this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit})
             })
-        }, 60000)
+        }, 30000)
     }
 
-    dispatchVehicleLocation = () => {
+    dispatchDepartures = (departures) => {
 
+        let dep = departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit
+       const vehicleLocations =  dep.map(vehicle => {
+            return {lat: vehicle.MonitoredVehicleJourney.VehicleLocation.Latitude, lon: vehicle.MonitoredVehicleJourney.VehicleLocation.Longitude}
+        })
 
+        this.props.dispatch(addVehicle(vehicleLocations))
     }
+  
 
     renderDepartureCards = () => {
         const departureCards = this.state.departures.map(departure => {
@@ -39,6 +48,7 @@ class DeparturesContainer extends React.Component {
     }
 
     render(){
+        console.log("Departures", this.props)
         if(this.state.departures)
         {
             return(
@@ -54,4 +64,7 @@ class DeparturesContainer extends React.Component {
         }
     }
 }
-export default connect(dispatchVehicleLocation)(DeparturesContainer)
+
+
+
+export default connect()(DeparturesContainer)

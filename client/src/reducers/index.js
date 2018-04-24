@@ -1,14 +1,21 @@
-const vehiclesData = (state = [], action) => {
+const vehiclesData = (state = {
+    locations: [] 
+}
+, action) => {
     switch (action.type) {
       case 'ADD_VEHICLE':
         return {
           ...state,
-            lat: action.lat,
-            lon: action.lon,
-          
+            locations: action.locations
         }
       default:
         return state
     }
   }
   export default vehiclesData
+
+    // location: {
+    
+            //         lat: action.location.lat,
+            //         lon: action.location.lon
+            // },

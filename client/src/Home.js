@@ -3,6 +3,10 @@ import MapContainer from './MapContainer'
 import SidebardContainer from './SidebarContainer'
 import Adapter from './Adapter'
 import Utils from './Utils'
+import {connect} from 'react-redux'
+import {addVehicle} from './actions'
+import { bindActionCreators } from 'redux'
+
 import { Container, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
@@ -30,7 +34,7 @@ class Home extends React.Component {
              console.log(this.state)
             }
         )
-
+        // this.props.dispatch(addVehicle()
     }
 
     renderHomeComponents = () => {
@@ -49,6 +53,7 @@ class Home extends React.Component {
                         <MapContainer userLocation={this.state.userLocation}
                                       zoom ={this.state.zoom}
                                       mapFocus={this.state.mapFocus} 
+                                      vehicleLocations={this.props.locations}
                                       selectedStop={this.state.selectedStop} 
                                       selectStop={this.selectStop} 
                                       stops={this.state.closeStops} />
@@ -69,7 +74,7 @@ class Home extends React.Component {
                         <Grid.Column  width={13} >
                             <MapContainer userLocation={this.state.userLocation}
                                           mapFocus={this.state.mapFocus}
-                                          vehicleLocation={this.state.vehicleLocation}
+                                          vehicleLocation={this.props.locations}
                                           zoom={this.state.zoom}
                                           selectStop={this.selectStop} 
                                           stops={this.state.closeStops} />
@@ -94,7 +99,25 @@ class Home extends React.Component {
 
 
     render(){
+        console.log("HOME PROPS",this.props)
+
         return (this.renderHomeComponents())
     }
+
+
+
+
 }
-export default Home
+
+
+const mapStateToProps = (state, ownProps) => {
+    return { locations: state.locations, ownProps }
+
+  }
+
+//   const mapDispatchToProps = (dispatch, ownProps) => {
+//       return(
+//         addVehicle
+//       )
+//   }
+export default connect(mapStateToProps)(Home)

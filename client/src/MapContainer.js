@@ -76,7 +76,7 @@ class MapContainer extends React.Component{
     }
 
     render(){
-
+        console.log(this.props)
         return(
             <div>
                 <Map google={this.props.google} 
@@ -97,6 +97,7 @@ class MapContainer extends React.Component{
 
                     
                     {this.renderInfoWindows()}
+
                     {this.state.markers}
                 </Map>
 
