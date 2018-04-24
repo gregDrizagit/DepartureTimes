@@ -1,5 +1,6 @@
 const vehiclesData = (state = {
-    locations: [] 
+    locations: [], 
+    isShowingVehicles: false 
 }
 , action) => {
     switch (action.type) {
@@ -8,6 +9,12 @@ const vehiclesData = (state = {
           ...state,
             locations: action.locations
         }
+      case 'SHOW_VEHICLES':
+        return {
+          ...state,
+          isShowingVehicles: action.isShowingVehicles
+        }
+      
       default:
         return state
     }

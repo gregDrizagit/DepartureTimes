@@ -3,6 +3,8 @@ import StopCard from './StopCard'
 import DeparturesContainer from './DeparturesContainer'
 import Adapter from './Adapter'
 import { Segment, Button, Card } from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {addVehicle, showVehicles} from './actions'
 
 class SidebarContainer extends React.Component {
 
@@ -11,7 +13,13 @@ class SidebarContainer extends React.Component {
     }
 
     showDepartureTimes = () => {
-        this.setState({showingDepartureTimes: !this.state.showingDepartureTimes})
+        this.setState({showingDepartureTimes: !this.state.showingDepartureTimes}, 
+            () => {
+                this.props.dispatch(showVehicles(this.state.showingDepartureTimes))
+            }
+        )
+
+
     }
 
     getDepartureTimes = () => {
@@ -22,9 +30,10 @@ class SidebarContainer extends React.Component {
 
     renderStops = () => {
 
-        const stopCards = this.props.stops.map(stop => <StopCard selectStop={this.props.selectStop} stop={stop} />)
+        const stopCards = this.props.stops.map(stop => <StopCard key={Math.random() * 100} selectStop={this.props.selectStop} stop={stop} />)
         return stopCards
     }
+
     render(){
         return(
             <div>
@@ -42,7 +51,9 @@ class SidebarContainer extends React.Component {
                 }
                 {
                     this.state.showingDepartureTimes ?
-                        <DeparturesContainer selectedStop={this.props.selectedStop} />
+                        <div>
+                            <DeparturesContainer selectedStop={this.props.selectedStop} />
+                        </div>
                     :
                         <Segment.Group>
                             {this.renderStops()}
@@ -56,4 +67,4 @@ class SidebarContainer extends React.Component {
     }
 }
 
-export default SidebarContainer
+export default connect()(SidebarContainer)

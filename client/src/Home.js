@@ -20,21 +20,18 @@ class Home extends React.Component {
            lat: 37.7257, 
            lon: -122.4511
        }
-      
+
     }
 
     componentDidMount(){
 
         Adapter.getStops().then(resp => {
-            console.log(resp)
             this.setState({stops: resp.Contents.dataObjects.ScheduledStopPoint})
         }).then(() => {
              let closeStops = Utils.computeClosestStation({lat: this.state.userLocation.lat , lon: this.state.userLocation.lon}, this.state.stops)
              this.setState({closeStops: closeStops}); 
-             console.log(this.state)
             }
         )
-        // this.props.dispatch(addVehicle()
     }
 
     renderHomeComponents = () => {
@@ -44,7 +41,8 @@ class Home extends React.Component {
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={3} >
                         <Input fluid placeholder={"Enter a SF Address"} />
-                        <SidebardContainer selectedStop={this.state.selectedStop} 
+                        <SidebardContainer 
+                                           selectedStop={this.state.selectedStop} 
                                            selectStop={this.selectStop} 
                                            trackVehicle={this.trackVehicle}
                                            stops={this.state.closeStops}/>
@@ -68,7 +66,7 @@ class Home extends React.Component {
                     <Grid divided style={{height:"95vh"}} columns={2}>
                         <Grid.Column width={3} >
                             <Input fluid placeholder={"Enter a SF Address"} />
-                            <SidebardContainer selectStop={this.selectStop} 
+                            <SidebardContainer  selectStop={this.selectStop} 
                                                 stops={this.state.closeStops}/>
                         </Grid.Column>
                         <Grid.Column  width={13} >
@@ -99,13 +97,8 @@ class Home extends React.Component {
 
 
     render(){
-        console.log("HOME PROPS",this.props)
-
         return (this.renderHomeComponents())
     }
-
-
-
 
 }
 
@@ -115,9 +108,5 @@ const mapStateToProps = (state, ownProps) => {
 
   }
 
-//   const mapDispatchToProps = (dispatch, ownProps) => {
-//       return(
-//         addVehicle
-//       )
-//   }
+
 export default connect(mapStateToProps)(Home)

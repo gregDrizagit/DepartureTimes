@@ -11,8 +11,9 @@ class DeparturesContainer extends React.Component {
     }
 
     componentDidMount(){
-        console.log("mounted")
+
         Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
+            this.dispatchDepartures(departures)
             this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit},
             this.monitorStop())
         })
@@ -42,13 +43,12 @@ class DeparturesContainer extends React.Component {
 
     renderDepartureCards = () => {
         const departureCards = this.state.departures.map(departure => {
-            return <DepartureCard departure={departure} />
+            return <DepartureCard key={Math.random() * 100} departure={departure} />
         })
         return departureCards
     }
 
     render(){
-        console.log("Departures", this.props)
         if(this.state.departures)
         {
             return(
