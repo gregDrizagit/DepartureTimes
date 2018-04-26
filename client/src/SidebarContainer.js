@@ -13,12 +13,8 @@ class SidebarContainer extends React.Component {
     }
 
     showDepartureTimes = () => {
-        this.setState({showingDepartureTimes: !this.state.showingDepartureTimes}, 
-            () => {
-                this.props.dispatch(showVehicles(this.state.showingDepartureTimes))
-            }
-        )
-
+        this.setState({showingDepartureTimes: !this.state.showingDepartureTimes})
+        this.props.dispatch(showVehicles(!this.state.showingDepartureTimes))
 
     }
 

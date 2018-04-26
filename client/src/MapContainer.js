@@ -3,6 +3,7 @@ import {Map, Marker, InfoWindow, Polyline, GoogleApiWrapper} from 'google-maps-r
 // e05cfc65-e417-4bd6-a48b-859486e2adf6 
 import { Container } from 'semantic-ui-react'
 import {connect} from 'react-redux'
+import { addVehicle } from './actions';
 
 
 
@@ -20,6 +21,23 @@ class MapContainer extends React.Component{
         this.createMarkers()
     }
 
+    componentWillReceiveProps(next){
+
+        if(next.isShowingVehicles && next.locations.length > 0)
+        {
+            this.renderVehicleMarkers(next)
+
+        }
+        if(next.isShowingVehicles === false){
+
+            this.createMarkers()
+            // this.props.dispatch(addVehicle([]))
+
+        }
+
+    }
+
+  
     onClick = (props, marker, e) => {
         this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow, zoom: 18})
     
@@ -32,24 +50,22 @@ class MapContainer extends React.Component{
         })
     }
 
-    renderVehicleMarkers = () => {
+    renderVehicleMarkers = (props) => {
 
         
         this.removeMapMarkers(this.state.markers)
-        console.log(this.state)
-        const vehicleMarkers = this.props.locations.map(vehicle =>{
+        const vehicleMarkers = props.locations.map(vehicle =>{
             return(
                 <Marker
-                         position={{lat: vehicle.lon, lng: vehicle.lat}}
-                         icon={{
-                         url: "https://icons8.com/icon/240/bus",
-                         anchor: new this.props.google.maps.Point(32,32),
-                         scaledSize: new this.props.google.maps.Size(32,32)
-                        }} />
+                    key={Math.random() * 100}
+                    title={"Bus"}
+                    position={{lat: vehicle.lat, lng: vehicle.lon}} 
+                />
             )
         })
 
-        this.setState({vehicleMarkers: vehicleMarkers})
+        this.setState({markers: vehicleMarkers})
+        return vehicleMarkers
     }
 
     removeMapMarkers = (markers) => {
@@ -65,19 +81,18 @@ class MapContainer extends React.Component{
 
     renderInfoWindows = () => {
 
-        if(this.props.selectedStop)
-        {
-        return(
-            <InfoWindow
-                marker={this.state.activeMarker}
-                visible={true}
-                >
-                <div>
-                    <h3>{this.props.selectedStop.name} - {this.props.selectedStop.distance} miles away</h3>
-                </div>
-            </InfoWindow>
-        )
-    }
+        if(this.props.selectedStop){
+            return(
+                <InfoWindow
+                    marker={this.state.activeMarker}
+                    visible={true}
+                    >
+                    <div>
+                        <h3>{this.props.selectedStop.name} - {this.props.selectedStop.distance} miles away</h3>
+                    </div>
+                </InfoWindow>
+            )
+        }
 
     }
 
@@ -100,7 +115,7 @@ class MapContainer extends React.Component{
     }
 
     render(){
-        console.log("MAP props" ,this.props)
+        console.log("map render props", this.props)
         return(
             <div>
                 <Map google={this.props.google} 
@@ -121,8 +136,7 @@ class MapContainer extends React.Component{
 
                     
                     {this.renderInfoWindows()}
-
-
+                    
                     {this.state.markers}
                  
                 </Map>

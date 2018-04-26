@@ -36,7 +36,6 @@ class DeparturesContainer extends React.Component {
        const vehicleLocations =  dep.map(vehicle => {
             return {lat: vehicle.MonitoredVehicleJourney.VehicleLocation.Latitude, lon: vehicle.MonitoredVehicleJourney.VehicleLocation.Longitude}
         })
-
         this.props.dispatch(addVehicle(vehicleLocations))
     }
   
