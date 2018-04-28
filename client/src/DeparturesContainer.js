@@ -4,11 +4,16 @@ import Adapter from './Adapter'
 import { Segment } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {addVehicle} from './actions'
+
+
+
 class DeparturesContainer extends React.Component {
 
     state = {
 
     }
+
+  
 
     componentDidMount(){
 
@@ -22,12 +27,17 @@ class DeparturesContainer extends React.Component {
 
     monitorStop = () => {
 
-        setInterval(() => {
+        const startRefresh = setInterval(() => {
             Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
                 this.dispatchDepartures(departures)
                 this.setState({departures: departures.ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit})
             })
         }, 30000)
+
+
+        this.setState({interval: startRefresh})
+
+
     }
 
     dispatchDepartures = (departures) => {
@@ -46,6 +56,13 @@ class DeparturesContainer extends React.Component {
         })
         return departureCards
     }
+
+    componentWillUnmount() {
+
+        clearInterval(this.state.interval)
+
+    }
+
 
     render(){
         if(this.state.departures)

@@ -97,7 +97,6 @@ class Home extends React.Component {
 
 
     render(){
-        console.log("home props", this.props)
         return (this.renderHomeComponents())
     }
 

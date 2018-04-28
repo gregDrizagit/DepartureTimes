@@ -40,7 +40,6 @@ class MapContainer extends React.Component{
   
     onClick = (props, marker, e) => {
         this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow, zoom: 18})
-    
         this.props.stops.forEach(stop => {
             if(stop.name === props.title) {
 
@@ -115,7 +114,6 @@ class MapContainer extends React.Component{
     }
 
     render(){
-        console.log("map render props", this.props)
         return(
             <div>
                 <Map google={this.props.google} 
@@ -127,12 +125,25 @@ class MapContainer extends React.Component{
                     
                     <Marker
                          name={'Your position'}
+                         onClick={this.onClick}
+
                          position={{lat: this.props.userLocation.lat, lng: this.props.userLocation.lon}}
                          icon={{
                          url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
                          anchor: new this.props.google.maps.Point(32,32),
                          scaledSize: new this.props.google.maps.Size(32,32)
                         }} />
+
+                    {
+                        this.props.selectedStop ?
+                         <Marker
+                         onClick={this.onClick}
+                         name={'Bus Stop'}
+                         position={{lat: this.props.selectedStop.lat, lng: this.props.selectedStop.lon}}
+                         />
+                         :
+                         null
+                    }
 
                     
                     {this.renderInfoWindows()}
