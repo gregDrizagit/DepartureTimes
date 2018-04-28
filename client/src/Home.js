@@ -6,7 +6,7 @@ import Utils from './Utils'
 import {connect} from 'react-redux'
 import {addVehicle} from './actions'
 import { bindActionCreators } from 'redux'
-
+import PlacesAutocomplete from 'react-places-autocomplete'
 import { Container, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
@@ -32,7 +32,12 @@ class Home extends React.Component {
              this.setState({closeStops: closeStops}); 
             }
         )
+
     }
+
+    onChange = () => {
+    }
+    
 
     renderHomeComponents = () => {
        if(this.state.closeStops && this.state.selectedStop){
@@ -40,7 +45,7 @@ class Home extends React.Component {
                 <Container style={{padding: "20px"}}>
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={3} >
-                        <Input fluid placeholder={"Enter a SF Address"} />
+                     
                         <SidebardContainer 
                                            selectedStop={this.state.selectedStop} 
                                            selectStop={this.selectStop} 
@@ -65,7 +70,40 @@ class Home extends React.Component {
                 <Container style={{padding: "20px"}}>
                     <Grid divided style={{height:"95vh"}} columns={2}>
                         <Grid.Column width={3} >
-                            <Input fluid placeholder={"Enter a SF Address"} />
+                            <PlacesAutocomplete 
+                                value={this.state.input}
+                                onChange={input => this.setState({input})}
+                                onSelect={this.handleSelect}
+                            >
+                            
+                               {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+                                <div>
+                                    <input
+                                    {...getInputProps({
+                                        placeholder: 'Search Places ...',
+                                        className: 'location-search-input'
+                                    })}
+                                    />
+                                    <div className="autocomplete-dropdown-container">
+                                    {suggestions.map(suggestion => {
+                                        const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+                                        // inline style for demonstration purpose
+                                        const style = suggestion.active
+                                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                        return (
+                                        <div {...getSuggestionItemProps(suggestion, { className, style })}>
+                                            <span>{suggestion.description}</span>
+                                        </div>
+                                        )
+                                    })}
+                                    </div>
+                                    
+                                </div>
+                               )}
+                               
+
+                            </PlacesAutocomplete>
                             <SidebardContainer  selectStop={this.selectStop} 
                                                 stops={this.state.closeStops}/>
                         </Grid.Column>
@@ -97,6 +135,7 @@ class Home extends React.Component {
 
 
     render(){
+        console.log(this.state.input)
         return (this.renderHomeComponents())
     }
 
@@ -108,5 +147,6 @@ const mapStateToProps = (state, ownProps) => {
 
   }
 
+  
 
 export default connect(mapStateToProps)(Home)

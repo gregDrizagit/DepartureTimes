@@ -5,6 +5,7 @@ import Adapter from './Adapter'
 import { Segment, Button, Card } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {addVehicle, showVehicles} from './actions'
+import {Map, Marker, Listing, InfoWindow, Polyline, GoogleApiWrapper} from 'google-maps-react';
 
 class SidebarContainer extends React.Component {
 
@@ -23,6 +24,8 @@ class SidebarContainer extends React.Component {
         
 
     }
+
+    
 
     renderStops = () => {
 
@@ -57,10 +60,12 @@ class SidebarContainer extends React.Component {
                 
 
                 }
+
                
             </div>
         )
     }
 }
+
 
 export default connect()(SidebarContainer)

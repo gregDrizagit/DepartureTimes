@@ -133,6 +133,7 @@ class MapContainer extends React.Component{
                          anchor: new this.props.google.maps.Point(32,32),
                          scaledSize: new this.props.google.maps.Size(32,32)
                         }} />
+                        
 
                     {
                         this.props.selectedStop ?

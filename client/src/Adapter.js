@@ -17,6 +17,11 @@ class Adapter {
         return fetch(`http://api.511.org/transit/VehicleMonitoring?api_key={yourkey}&agency=AC&vehicleID=${vehicleId}`)
         .then(resp => resp.text()).then(text => JSON.parse(text))
     }
+
+    static googlePlacesAutocomplete(place) {
+        return fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${place}&types=establishment&location=37.76999,-122.44696&radius=500&strictbounds&key=AIzaSyDO0hnqbkqmrcIW8AgORQWh-8ogRnT3rqY`)
+        .then(resp => resp.json()).then(console.log())
+    }
 }
 
 export default Adapter
