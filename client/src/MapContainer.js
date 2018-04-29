@@ -31,7 +31,6 @@ class MapContainer extends React.Component{
         if(next.isShowingVehicles === false){
 
             this.createMarkers()
-            // this.props.dispatch(addVehicle([]))
 
         }
 
