@@ -1,5 +1,9 @@
 const vehiclesData = (state = {
-    locations: [], 
+    locations: [],
+    userCurrentLocation:{
+      lat: 37.7257, 
+      lon: -122.4511
+    }, 
     isShowingVehicles: false 
 }
 , action) => {
@@ -14,15 +18,16 @@ const vehiclesData = (state = {
           ...state,
           isShowingVehicles: action.isShowingVehicles
         }
-      
+
+        case 'SET_PLACE': 
+      return {
+        ...state,
+        userCurrentLocation: action.userCurrentLocation
+      }
+
+
       default:
-        return state
+      return state
     }
   }
   export default vehiclesData
-
-    // location: {
-    
-            //         lat: action.location.lat,
-            //         lon: action.location.lon
-            // },

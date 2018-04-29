@@ -113,6 +113,7 @@ class MapContainer extends React.Component{
     }
 
     render(){
+        console.log(this.props)
         return(
             <div>
                 <Map google={this.props.google} 
@@ -159,7 +160,7 @@ class MapContainer extends React.Component{
 
 const mapStateToProps = (state, ownProps) => {
 
-     return { locations: state.locations, isShowingVehicles: state.isShowingVehicles }
+     return { locations: state.locations, userCurrentLocation: state.userCurrentLocation, isShowingVehicles: state.isShowingVehicles }
 
   }
 export default GoogleApiWrapper({

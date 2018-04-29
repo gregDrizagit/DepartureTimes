@@ -1,19 +1,24 @@
-import React from 'React' 
-import {addVehicle} from './actions'
+import React from 'react' 
+import {setPlace} from './actions'
 import {connect} from 'react-redux'
-import PlacesAutocomplete, { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete'
+import PlacesAutocomplete, { geocodeByPlaceId, getLatLng, geocodeByAddress } from 'react-places-autocomplete'
+import { Segment, Input } from 'semantic-ui-react'
+import {GoogleApiWrapper} from 'google-maps-react';
 
 class LocationInputContainer extends React.Component{
 
     state = {}
+
     selectPlace = (address, placeId) => {
-        console.log("Selected", placeId)
+        this.getCoordinatesForPlace(address)
     }
 
-    getCoordinatesForPlace = (placeId) => {
-        geocodeByPlaceId(placeId)
-        .then(console.log)
-        .catch(error => console.error())
+    getCoordinatesForPlace = (address, placeId) => {
+     
+        geocodeByAddress(address)
+        .then(results => getLatLng(results[0]))
+        .then(({ lat, lng }) => this.props.dispatch(setPlace({lat: lat, lon:lng})))
+        // resp => getLatLng(resp)
     }   
 
     renderPlaceSuggestions = (places, props) => {
@@ -21,14 +26,16 @@ class LocationInputContainer extends React.Component{
             console.log(place)
          const className = places.active ? 'suggestion-item--active' : 'suggesion-item';
              return (
-             <div {...props(place, {className})}>
+             <Segment {...props(place, {className})}>
                  {place.description}
-             </div>
+             </Segment>
              )
          })
  
          return placeSegments
      }
+
+      
 
     render(){
         return(
@@ -36,12 +43,18 @@ class LocationInputContainer extends React.Component{
             value={this.state.input}
             onChange={input => this.setState({input})}
             onSelect={this.selectPlace}
+            searchOptions = {{
+                location: new this.props.google.maps.LatLng(37.7257, -122.4511),
+                radius: 2000
+             }
+            }
 
         >
         
            {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
                 <Input
+                size="large"
                 {...getInputProps({
                     placeholder: 'Search Places ...',
                     className: 'location-search-input'
@@ -49,7 +62,9 @@ class LocationInputContainer extends React.Component{
                 // value={this.state.input}
                 />
                 {
-                    this.renderPlaceSuggestions(suggestions, getSuggestionItemProps)
+                    <Segment.Group style={{position: "absolute", zIndex: 1}}>
+                         {this.renderPlaceSuggestions(suggestions, getSuggestionItemProps)}
+                    </Segment.Group>
                 }
                                                         
             </div>
@@ -61,6 +76,16 @@ class LocationInputContainer extends React.Component{
 
 
 
+// export default GoogleApiWrapper({
+//     apiKey: ("AIzaSyDO0hnqbkqmrcIW8AgORQWh-8ogRnT3rqY"),
+//     libraries: ['places']
 
+//   })
 
-export default connect()(LocationInputContainer);
+  export default GoogleApiWrapper({
+    apiKey: ("AIzaSyDO0hnqbkqmrcIW8AgORQWh-8ogRnT3rqY"),
+    libraries: ['places']
+
+  })(connect()(LocationInputContainer))
+
+// export default connect()(LocationInputContainer);

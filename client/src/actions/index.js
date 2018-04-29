@@ -10,3 +10,8 @@ export const showVehicles = isShowingVehicles => ({
   isShowingVehicles: isShowingVehicles   
 })
 
+export const setPlace = place => ({
+  type: 'SET_PLACE',
+  userCurrentLocation: place   
+})
+

@@ -5,15 +5,15 @@ import Adapter from './Adapter'
 import Utils from './Utils'
 import {connect} from 'react-redux'
 import {addVehicle} from './actions'
-import LocationInputContainter from './LocationInputContainer'
+import HeaderContainer from './HeaderContainer'
 import { Container, Segment, Dropdown, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
 
     state = {
        userLocation: {
-           lat:  37.7257,
-           lon: -122.4511
+           lat:  this.props.userCurrentLocation.lat,
+           lon: this.props.userCurrentLocation.lon
        },
        mapFocus: {
            lat: 37.7257, 
@@ -36,12 +36,11 @@ class Home extends React.Component {
     }
    
 
-       
-
     renderHomeComponents = () => {
        if(this.state.closeStops && this.state.selectedStop){
             return(
                 <Container style={{padding: "20px"}}>
+
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={3} >
                      
@@ -101,14 +100,19 @@ class Home extends React.Component {
 
    
     render(){
-        return (this.renderHomeComponents())
+        return (
+            <div>
+                <HeaderContainer />
+                {this.renderHomeComponents()}
+            </div>
+        )
     }
 
 }
 
 
 const mapStateToProps = (state, ownProps) => {
-    return { locations: state.locations, ownProps }
+    return { locations: state.locations, userCurrentLocation: state.userCurrentLocation }
 
   }
 
