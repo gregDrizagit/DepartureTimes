@@ -18,22 +18,36 @@ class MapContainer extends React.Component{
    
 
     componentDidMount(){
-        this.createMarkers()
+        this.createMarkers(this.props)
     }
 
     componentWillReceiveProps(next){
 
-        if(next.isShowingVehicles && next.locations.length > 0)
-        {
+
+        if(next.stops && next.stops !== this.props.stops){
+             this.resetMarkers(next)
+        }
+
+        if(next.isShowingVehicles && next.locations.length > 0){
             this.renderVehicleMarkers(next)
-
         }
+
         if(next.isShowingVehicles === false){
-
-            this.createMarkers()
+            //if we show departures and then stop showing departures 
+            //we need to reset the markers 
+            this.createMarkers(next)
 
         }
 
+    }
+
+    resetMarkers = (newLocations) => {
+        this.removeOldLocationMarkers()
+    }
+
+    removeOldLocationMarkers = () => {
+    
+        this.setState({markers: null})
     }
 
   
@@ -96,9 +110,9 @@ class MapContainer extends React.Component{
 
    
 
-    createMarkers = () => {
-
-        const markers = this.props.stops.map((stop) => {
+    createMarkers = (props) => {
+        
+        const markers = props.stops.map((stop) => {
             return (
                 <Marker
                 key={Math.random() * 100}
@@ -113,21 +127,20 @@ class MapContainer extends React.Component{
     }
 
     render(){
-        console.log(this.props)
         return(
             <div>
                 <Map google={this.props.google} 
                     zoom={this.state.zoom}
                     style={{width:"95%", height: "95%"}}
-                    initialCenter={ {lat: this.props.userLocation.lat , 
-                                     lng: this.props.userLocation.lon}}
-                    center={{lat: this.props.mapFocus.lat, lng: this.props.mapFocus.lon}}>
+                    initialCenter={ {lat: this.props.userCurrentLocation.lat , 
+                                     lng: this.props.userCurrentLocation.lon}}
+                    center={{lat: this.props.userCurrentLocation.lat, lng: this.props.userCurrentLocation.lon}}>
                     
                     <Marker
                          name={'Your position'}
                          onClick={this.onClick}
 
-                         position={{lat: this.props.userLocation.lat, lng: this.props.userLocation.lon}}
+                         position={{lat: this.props.userCurrentLocation.lat, lng: this.props.userCurrentLocation.lon}}
                          icon={{
                          url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
                          anchor: new this.props.google.maps.Point(32,32),
@@ -158,7 +171,7 @@ class MapContainer extends React.Component{
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 
      return { locations: state.locations, userCurrentLocation: state.userCurrentLocation, isShowingVehicles: state.isShowingVehicles }
 

@@ -4,7 +4,7 @@ import SidebardContainer from './SidebarContainer'
 import Adapter from './Adapter'
 import Utils from './Utils'
 import {connect} from 'react-redux'
-import {addVehicle} from './actions'
+import {addVehicle, monitoringStop} from './actions'
 import HeaderContainer from './HeaderContainer'
 import { Container, Segment, Dropdown, Grid, Input } from 'semantic-ui-react'
 
@@ -25,14 +25,26 @@ class Home extends React.Component {
 
     componentDidMount(){
 
+       
+        this.getStopsNearUserLocation()
+
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps !== this.props){
+
+            this.getStopsNearUserLocation()
+        }
+    }
+
+    getStopsNearUserLocation = () => {
+
         Adapter.getStops().then(resp => {
             this.setState({stops: resp.Contents.dataObjects.ScheduledStopPoint})
         }).then(() => {
-             let closeStops = Utils.computeClosestStation({lat: this.state.userLocation.lat , lon: this.state.userLocation.lon}, this.state.stops)
+             let closeStops = Utils.computeClosestStation({lat: this.props.userCurrentLocation.lat , lon: this.props.userCurrentLocation.lon}, this.state.stops)
              this.setState({closeStops: closeStops}); 
-            }
-        )
-
+        })
     }
    
 
@@ -51,7 +63,7 @@ class Home extends React.Component {
                                            stops={this.state.closeStops}/>
                     </Grid.Column>
                     <Grid.Column  width={13} >
-                        <MapContainer userLocation={this.state.userLocation}
+                        <MapContainer userLocation={this.props.userCurrentLocation}
                                       zoom ={this.state.zoom}
                                       mapFocus={this.state.mapFocus} 
                                       vehicleLocations={this.props.locations}
@@ -73,7 +85,7 @@ class Home extends React.Component {
                                                 stops={this.state.closeStops}/>
                         </Grid.Column>
                         <Grid.Column  width={13} >
-                            <MapContainer userLocation={this.state.userLocation}
+                            <MapContainer userLocation={this.props.userCurrentLocation}
                                           mapFocus={this.state.mapFocus}
                                           vehicleLocation={this.props.locations}
                                           zoom={this.state.zoom}
@@ -96,6 +108,7 @@ class Home extends React.Component {
     selectStop = (stop) => {
         const newFocusPosition = {lat: parseFloat(stop.lat), lon: parseFloat(stop.lon)}
         this.setState({selectedStop: stop, mapFocus: newFocusPosition, zoom: 18})
+        this.props.dispatch(monitoringStop(stop))
     }
 
    
@@ -111,7 +124,7 @@ class Home extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return { locations: state.locations, userCurrentLocation: state.userCurrentLocation }
 
   }

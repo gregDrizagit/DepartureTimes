@@ -15,3 +15,14 @@ export const setPlace = place => ({
   userCurrentLocation: place   
 })
 
+export const viewingLocation = location => ({
+  type: 'VIEWING_LOCATION',
+  viewingLocation: location   
+})
+
+export const monitoringStop = monitoringStop => ({
+  type: 'MONITORING_STOP',
+  monitoringStop: monitoringStop   
+})
+
+

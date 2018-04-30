@@ -19,13 +19,6 @@ class SidebarContainer extends React.Component {
 
     }
 
-    getDepartureTimes = () => {
-
-        
-
-    }
-
-    
 
     renderStops = () => {
 

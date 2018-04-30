@@ -4,7 +4,9 @@ const vehiclesData = (state = {
       lat: 37.7257, 
       lon: -122.4511
     }, 
-    isShowingVehicles: false 
+    isShowingVehicles: false,
+    viewingLocation: "City College of San Francisco", 
+    monitoringStop: ""
 }
 , action) => {
     switch (action.type) {
@@ -13,17 +15,30 @@ const vehiclesData = (state = {
           ...state,
             locations: action.locations
         }
+
       case 'SHOW_VEHICLES':
         return {
           ...state,
           isShowingVehicles: action.isShowingVehicles
         }
 
-        case 'SET_PLACE': 
-      return {
-        ...state,
-        userCurrentLocation: action.userCurrentLocation
-      }
+      case 'SET_PLACE': 
+        return {
+          ...state,
+          userCurrentLocation: action.userCurrentLocation
+        }
+
+      case 'VIEWING_LOCATION': 
+        return {
+          ...state,
+          viewingLocation: action.viewingLocation
+        }
+
+        case 'MONITORING_STOP': 
+        return {
+          ...state,
+          monitoringStop: action.monitoringStop
+        }
 
 
       default:

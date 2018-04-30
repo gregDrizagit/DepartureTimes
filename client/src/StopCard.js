@@ -9,6 +9,7 @@ class StopCard extends React.Component{
     handleSelect = () => { 
         this.props.selectStop(this.props.stop)
     }
+    
     render(){
         return(
             <Segment         

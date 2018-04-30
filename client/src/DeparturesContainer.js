@@ -13,8 +13,6 @@ class DeparturesContainer extends React.Component {
 
     }
 
-  
-
     componentDidMount(){
 
         Adapter.getDepartureTimesForStop(this.props.selectedStop.id).then(departures => {
@@ -34,9 +32,7 @@ class DeparturesContainer extends React.Component {
             })
         }, 30000)
 
-
         this.setState({interval: startRefresh})
-
 
     }
 
