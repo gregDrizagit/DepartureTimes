@@ -1,6 +1,6 @@
 import React from 'react'
 import LocationInputContainer from './LocationInputContainer'
-import { Header, Container } from 'semantic-ui-react'
+import { Header, Container, Segment } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 
@@ -44,17 +44,19 @@ class HeaderContainer extends React.Component {
     render(){
         console.log("header props", this.props)
         return(
-            <Container>
-                <Header style={{paddingTop: "20px"}}>
+            <Segment compact basic clearing>
+                <Header style={{paddingTop: "20px"}} floated="left">
                     <LocationInputContainer setCurrentlyMonitoring={this.setCurrentlyMonitoring} />
+                </Header>
                     {
                         this.state.status ? 
-                        <h1>{this.state.status}</h1>
+                            <Header style={{paddingTop:20}} floated="left">
+                                <h1>{this.state.status}</h1>
+                            </Header>
                         :
                         null
                     }
-                </Header>
-            </Container>
+            </Segment>
         )
     }
 

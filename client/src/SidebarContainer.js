@@ -9,7 +9,7 @@ import {Map, Marker, Listing, InfoWindow, Polyline, GoogleApiWrapper} from 'goog
 
 class SidebarContainer extends React.Component {
 
-    state={
+    state= {
         showingDepartureTimes: false
     }
 
