@@ -25,4 +25,9 @@ export const monitoringStop = monitoringStop => ({
   monitoringStop: monitoringStop   
 })
 
+export const isLoading = isLoading => ({
+  type: 'IS_LOADING',
+  isLoading: isLoading   
+})
+
 

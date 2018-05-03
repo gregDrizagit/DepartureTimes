@@ -1,6 +1,6 @@
 import React from 'react'
 import LocationInputContainer from './LocationInputContainer'
-import { Header, Container, Segment } from 'semantic-ui-react'
+import { Header, Container, Sticky, Segment } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 
@@ -23,6 +23,8 @@ class HeaderContainer extends React.Component {
 
    }
 
+
+
    renderStatusHeader = (props) => {
 
         let statusMessage = ""
@@ -42,16 +44,15 @@ class HeaderContainer extends React.Component {
    }
     
     render(){
-        console.log("header props", this.props)
         return(
-            <Segment compact basic clearing>
+            <Segment basic clearing>
                 <Header style={{paddingTop: "20px"}} floated="left">
                     <LocationInputContainer setCurrentlyMonitoring={this.setCurrentlyMonitoring} />
                 </Header>
                     {
                         this.state.status ? 
                             <Header style={{paddingTop:20}} floated="left">
-                                <h1>{this.state.status}</h1>
+                                <h2>{this.state.status}</h2>
                             </Header>
                         :
                         null
@@ -63,7 +64,7 @@ class HeaderContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { locations: state.locations, monitoringStop: state.monitoringStop, isShowingVehicles: state.isShowingVehicles, viewingLocation: state.viewingLocation, userCurrentLocation: state.userCurrentLocation }
+    return { locations: state.locations, isLoading: state.isLoading, monitoringStop: state.monitoringStop, isShowingVehicles: state.isShowingVehicles, viewingLocation: state.viewingLocation, userCurrentLocation: state.userCurrentLocation }
 
   }
 

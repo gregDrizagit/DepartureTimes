@@ -6,7 +6,8 @@ const vehiclesData = (state = {
     }, 
     isShowingVehicles: false,
     viewingLocation: "City College of San Francisco", 
-    monitoringStop: ""
+    monitoringStop: "", 
+    isLoading: true
 }
 , action) => {
     switch (action.type) {
@@ -38,6 +39,12 @@ const vehiclesData = (state = {
         return {
           ...state,
           monitoringStop: action.monitoringStop
+        }
+
+        case 'IS_LOADING': 
+        return {
+          ...state,
+          isLoading: action.isLoading
         }
 
 

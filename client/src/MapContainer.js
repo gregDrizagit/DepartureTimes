@@ -15,7 +15,7 @@ class MapContainer extends React.Component{
         zoom: this.props.zoom
     }
 
-   
+
 
     componentDidMount(){
         this.createMarkers(this.props)
@@ -127,11 +127,12 @@ class MapContainer extends React.Component{
     }
 
     render(){
+
         return(
             <div>
                 <Map google={this.props.google} 
                     zoom={this.state.zoom}
-                    style={{width:"95%", height: "95%"}}
+                    style={{width:"95%", height: "95%"}} //width:"95%", height:"95%"
                     initialCenter={ {lat: this.props.userCurrentLocation.lat , 
                                      lng: this.props.userCurrentLocation.lon}}
                     center={{lat: this.props.userCurrentLocation.lat, lng: this.props.userCurrentLocation.lon}}>
@@ -173,7 +174,7 @@ class MapContainer extends React.Component{
 
 const mapStateToProps = (state) => {
 
-     return { locations: state.locations, userCurrentLocation: state.userCurrentLocation, isShowingVehicles: state.isShowingVehicles }
+     return { locations: state.locations, isLoading: state.isLoading, userCurrentLocation: state.userCurrentLocation, isShowingVehicles: state.isShowingVehicles }
 
   }
 export default GoogleApiWrapper({

@@ -2,9 +2,9 @@ import React from 'react'
 import StopCard from './StopCard'
 import DeparturesContainer from './DeparturesContainer'
 import Adapter from './Adapter'
-import { Segment, Button, Card } from 'semantic-ui-react'
+import { Segment, Button, Loader, Card } from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {addVehicle, showVehicles} from './actions'
+import {addVehicle, showVehicles, isLoading} from './actions'
 import {Map, Marker, Listing, InfoWindow, Polyline, GoogleApiWrapper} from 'google-maps-react';
 
 class SidebarContainer extends React.Component {
@@ -13,11 +13,19 @@ class SidebarContainer extends React.Component {
         showingDepartureTimes: false
     }
 
+
     showDepartureTimes = () => {
         this.setState({showingDepartureTimes: !this.state.showingDepartureTimes})
         this.props.dispatch(showVehicles(!this.state.showingDepartureTimes))
 
     }
+
+    componentWillReceiveProps(next){
+        if(next.stops !== this.props.stops){
+            this.props.dispatch(isLoading(false))
+        }
+    }
+
 
 
     renderStops = () => {
@@ -27,6 +35,7 @@ class SidebarContainer extends React.Component {
     }
 
     render(){
+
         return(
             <div>
                 {
@@ -48,7 +57,12 @@ class SidebarContainer extends React.Component {
                         </div>
                     :
                         <Segment.Group>
-                            {this.renderStops()}
+                            {
+                                this.props.isLoading ?
+                                    <Loader active />
+                                :    
+                                    this.renderStops()
+                            }
                         </Segment.Group>
                 
 
@@ -61,4 +75,9 @@ class SidebarContainer extends React.Component {
 }
 
 
-export default connect()(SidebarContainer)
+const mapStateToProps = (state) => {
+    return { locations: state.locations, isLoading: state.isLoading, monitoringStop: state.monitoringStop, isShowingVehicles: state.isShowingVehicles, viewingLocation: state.viewingLocation, userCurrentLocation: state.userCurrentLocation }
+
+  }
+
+export default connect(mapStateToProps)(SidebarContainer)

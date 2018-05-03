@@ -6,7 +6,7 @@ import Utils from './Utils'
 import {connect} from 'react-redux'
 import {addVehicle, monitoringStop} from './actions'
 import HeaderContainer from './HeaderContainer'
-import { Container, Segment, Dropdown, Grid, Input } from 'semantic-ui-react'
+import { Container, Segment, Sticky, Dropdown, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
 
@@ -29,6 +29,8 @@ class Home extends React.Component {
         this.getStopsNearUserLocation()
 
     }
+    handleContextRef = contextRef => this.setState({ contextRef })
+
 
     componentWillReceiveProps(nextProps){
         if(nextProps !== this.props){
@@ -36,6 +38,8 @@ class Home extends React.Component {
             this.getStopsNearUserLocation()
         }
     }
+
+
 
     getStopsNearUserLocation = () => {
 
@@ -49,12 +53,14 @@ class Home extends React.Component {
    
 
     renderHomeComponents = () => {
+
        if(this.state.closeStops && this.state.selectedStop){
+
             return(
                 <Container style={{padding: "20px"}}>
 
                 <Grid divided style={{height:"95vh"}} columns={2}>
-                    <Grid.Column width={3} >
+                    <Grid.Column width={4} >
                      
                         <SidebardContainer 
                                            selectedStop={this.state.selectedStop} 
@@ -62,14 +68,14 @@ class Home extends React.Component {
                                            trackVehicle={this.trackVehicle}
                                            stops={this.state.closeStops}/>
                     </Grid.Column>
-                    <Grid.Column  width={13} >
-                        <MapContainer userLocation={this.props.userCurrentLocation}
-                                      zoom ={this.state.zoom}
-                                      mapFocus={this.state.mapFocus} 
-                                      vehicleLocations={this.props.locations}
-                                      selectedStop={this.state.selectedStop} 
-                                      selectStop={this.selectStop} 
-                                      stops={this.state.closeStops} />
+                    <Grid.Column width={12} >
+                            <MapContainer userLocation={this.props.userCurrentLocation}
+                                        zoom ={this.state.zoom}
+                                        mapFocus={this.state.mapFocus} 
+                                        vehicleLocations={this.props.locations}
+                                        selectedStop={this.state.selectedStop} 
+                                        selectStop={this.selectStop} 
+                                        stops={this.state.closeStops} />
                     </Grid.Column>
                 </Grid>
             </Container>
@@ -77,20 +83,21 @@ class Home extends React.Component {
         }else if(this.state.closeStops)
         {
             return(
+
                 <Container style={{padding: "20px"}}>
                     <Grid divided style={{height:"95vh"}} columns={2}>
-                        <Grid.Column width={3} >
+                        <Grid.Column width={4} >
                        
                             <SidebardContainer  selectStop={this.selectStop} 
                                                 stops={this.state.closeStops}/>
                         </Grid.Column>
-                        <Grid.Column  width={13} >
+                        <Grid.Column width={12} >
                             <MapContainer userLocation={this.props.userCurrentLocation}
-                                          mapFocus={this.state.mapFocus}
-                                          vehicleLocation={this.props.locations}
-                                          zoom={this.state.zoom}
-                                          selectStop={this.selectStop} 
-                                          stops={this.state.closeStops} />
+                                        mapFocus={this.state.mapFocus}
+                                        vehicleLocation={this.props.locations}
+                                        zoom={this.state.zoom}
+                                        selectStop={this.selectStop} 
+                                        stops={this.state.closeStops} />
                         </Grid.Column>
                     </Grid>
                 </Container>
@@ -113,6 +120,7 @@ class Home extends React.Component {
 
    
     render(){
+
         return (
             <div>
                 <HeaderContainer />

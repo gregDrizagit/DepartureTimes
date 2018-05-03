@@ -1,5 +1,5 @@
 import React from 'react' 
-import {setPlace, viewingLocation} from './actions'
+import {setPlace, viewingLocation, isLoading} from './actions'
 import {connect} from 'react-redux'
 import PlacesAutocomplete, { geocodeByPlaceId, getLatLng, geocodeByAddress } from 'react-places-autocomplete'
 import { Segment, Input } from 'semantic-ui-react'
@@ -12,6 +12,7 @@ class LocationInputContainer extends React.Component{
     selectPlace = (address, placeId) => {
         this.getCoordinatesForPlace(address)
         this.props.dispatch(viewingLocation(address))
+        this.props.dispatch(isLoading(true))
     }
 
     getCoordinatesForPlace = (address, placeId) => {
