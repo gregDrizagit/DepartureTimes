@@ -34,9 +34,12 @@ class HeaderContainer extends React.Component {
              statusMessage = `Monitoring bus departures for ${props.monitoringStop.name}`
 
        }else{
-
            statusMessage = `Viewing stops near ${props.viewingLocation}`
+       }
 
+       if(props.isLoading){
+           
+            statusMessage = `Loading stops near ${props.viewingLocation}`
        }
 
        this.setState({status: statusMessage})
@@ -45,19 +48,21 @@ class HeaderContainer extends React.Component {
     
     render(){
         return(
-            <Segment basic clearing>
-                <Header style={{paddingTop: "20px"}} floated="left">
-                    <LocationInputContainer setCurrentlyMonitoring={this.setCurrentlyMonitoring} />
-                </Header>
-                    {
-                        this.state.status ? 
-                            <Header style={{paddingTop:20}} floated="left">
-                                <h2>{this.state.status}</h2>
-                            </Header>
-                        :
-                        null
-                    }
-            </Segment>
+            <Container >
+                <Segment basic clearing>
+                    <Header style={{paddingTop: "20px"}} floated="left">
+                        <LocationInputContainer setCurrentlyMonitoring={this.setCurrentlyMonitoring} />
+                    </Header>
+                        {
+                            this.state.status ? 
+                                <Header style={{paddingTop:20}} floated="left">
+                                    <h2>{this.state.status}</h2>
+                                </Header>
+                            :
+                            null
+                        }
+                </Segment>
+            </Container>
         )
     }
 

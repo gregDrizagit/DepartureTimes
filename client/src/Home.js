@@ -61,12 +61,13 @@ class Home extends React.Component {
 
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={4} >
-                     
-                        <SidebardContainer 
-                                           selectedStop={this.state.selectedStop} 
-                                           selectStop={this.selectStop} 
-                                           trackVehicle={this.trackVehicle}
-                                           stops={this.state.closeStops}/>
+                        <Segment basic style={{height: window.innerHeight - 190, overflow: "scroll"}}>
+                            <SidebardContainer 
+                                            selectedStop={this.state.selectedStop} 
+                                            selectStop={this.selectStop} 
+                                            trackVehicle={this.trackVehicle}
+                                            stops={this.state.closeStops}/>
+                        </Segment>
                     </Grid.Column>
                     <Grid.Column width={12} >
                             <MapContainer userLocation={this.props.userCurrentLocation}
@@ -87,9 +88,12 @@ class Home extends React.Component {
                 <Container style={{padding: "20px"}}>
                     <Grid divided style={{height:"95vh"}} columns={2}>
                         <Grid.Column width={4} >
+                            <Segment basic style={{height: window.innerHeight - 190, overflow: "scroll"}}>
+
                        
                             <SidebardContainer  selectStop={this.selectStop} 
                                                 stops={this.state.closeStops}/>
+                            </Segment>
                         </Grid.Column>
                         <Grid.Column width={12} >
                             <MapContainer userLocation={this.props.userCurrentLocation}

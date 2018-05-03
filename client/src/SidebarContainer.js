@@ -41,10 +41,8 @@ class SidebarContainer extends React.Component {
                 {
                     this.props.selectedStop ? 
                         <div>
-                            <Card
-                                content={this.props.selectedStop.name}
-                                description={this.props.selectedStop.distance}>
-                            </Card>
+                            <h4>{this.props.selectedStop.name}</h4>
+                            <h5>{this.props.selectedStop.distance} miles away.</h5>
                             <Button onClick={() => this.showDepartureTimes()}>Departure Times</Button>
                         </div>
                     :
