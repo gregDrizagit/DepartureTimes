@@ -6,7 +6,7 @@ import Utils from './Utils'
 import {connect} from 'react-redux'
 import {addVehicle, monitoringStop} from './actions'
 import HeaderContainer from './HeaderContainer'
-import { Container, Segment, Sticky, Dropdown, Grid, Input } from 'semantic-ui-react'
+import { Container, Segment, Sticky, Rail, Dropdown, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
 
@@ -51,13 +51,13 @@ class Home extends React.Component {
         })
     }
    
-
+    // style={{padding: "20px"}}
     renderHomeComponents = () => {
 
        if(this.state.closeStops && this.state.selectedStop){
 
             return(
-                <Container style={{padding: "20px"}}>
+                <Container>
 
                 <Grid divided style={{height:"95vh"}} columns={2}>
                     <Grid.Column width={4} >
@@ -84,27 +84,37 @@ class Home extends React.Component {
         }else if(this.state.closeStops)
         {
             return(
+                <div>
+                    <Grid style={{height:"83vh"}} columns={2}>
+                        <Grid.Column width={4}>
+                            <Segment basic style={{height: window.innerHeight - 130, overflow: "scroll"}}>
 
-                <Container style={{padding: "20px"}}>
-                    <Grid divided style={{height:"95vh"}} columns={2}>
-                        <Grid.Column width={4} >
-                            <Segment basic style={{height: window.innerHeight - 190, overflow: "scroll"}}>
-
-                       
+                    
                             <SidebardContainer  selectStop={this.selectStop} 
                                                 stops={this.state.closeStops}/>
                             </Segment>
-                        </Grid.Column>
-                        <Grid.Column width={12} >
+                        </Grid.Column> 
+                        <Grid.Column width={12}>
                             <MapContainer userLocation={this.props.userCurrentLocation}
-                                        mapFocus={this.state.mapFocus}
-                                        vehicleLocation={this.props.locations}
-                                        zoom={this.state.zoom}
-                                        selectStop={this.selectStop} 
-                                        stops={this.state.closeStops} />
+                                                mapFocus={this.state.mapFocus}
+                                                vehicleLocation={this.props.locations}
+                                                zoom={this.state.zoom}
+                                                selectStop={this.selectStop} 
+                                                stops={this.state.closeStops} />
                         </Grid.Column>
                     </Grid>
-                </Container>
+
+
+                    {/* <Grid divided style={{height:"95vh"}} columns={2}>
+                        <Grid.Column width={4}> 
+                            
+                        </Grid.Column>
+                        <Grid.Column width={12}>
+            
+                         
+                        </Grid.Column>
+                    </Grid> */}
+                </div>
             )
 
         }else{

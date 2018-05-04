@@ -132,7 +132,7 @@ class MapContainer extends React.Component{
             <div>
                 <Map google={this.props.google} 
                     zoom={this.state.zoom}
-                    style={{width:"100%", height: "100%"}} //width:"95%", height:"95%"
+                    style={{height:"95%", width: "95%"}}
                     initialCenter={ {lat: this.props.userCurrentLocation.lat , 
                                      lng: this.props.userCurrentLocation.lon}}
                     center={{lat: this.props.userCurrentLocation.lat, lng: this.props.userCurrentLocation.lon}}>
