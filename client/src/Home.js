@@ -6,7 +6,7 @@ import Utils from './Utils'
 import {connect} from 'react-redux'
 import {addVehicle, monitoringStop} from './actions'
 import HeaderContainer from './HeaderContainer'
-import { Container, Segment, Sticky, Rail, Dropdown, Grid, Input } from 'semantic-ui-react'
+import { Container, Segment, Sticky, Rail, Dropdown, Loader, Grid, Input } from 'semantic-ui-react'
 
 class Home extends React.Component {
 
@@ -57,34 +57,36 @@ class Home extends React.Component {
        if(this.state.closeStops && this.state.selectedStop){
 
             return(
-                <Container>
-
-                <Grid divided style={{height:"95vh"}} columns={2}>
-                    <Grid.Column width={4} >
-                        <Segment basic style={{height: window.innerHeight - 190, overflow: "scroll"}}>
-                            <SidebardContainer 
+                <div>
+                    <HeaderContainer />
+                    <Grid style={{height:"83vh"}} columns={2}>
+                        <Grid.Column width={4} >
+                            <Segment basic style={{height: window.innerHeight - 130, overflow: "scroll"}}>
+                                <SidebardContainer 
+                                                selectedStop={this.state.selectedStop} 
+                                                selectStop={this.selectStop} 
+                                                trackVehicle={this.trackVehicle}
+                                                stops={this.state.closeStops}/>
+                            </Segment>
+                        </Grid.Column>
+                        <Grid.Column width={12} >
+                                <MapContainer userLocation={this.props.userCurrentLocation}
+                                            zoom ={this.state.zoom}
+                                            mapFocus={this.state.mapFocus} 
+                                            vehicleLocations={this.props.locations}
                                             selectedStop={this.state.selectedStop} 
                                             selectStop={this.selectStop} 
-                                            trackVehicle={this.trackVehicle}
-                                            stops={this.state.closeStops}/>
-                        </Segment>
-                    </Grid.Column>
-                    <Grid.Column width={12} >
-                            <MapContainer userLocation={this.props.userCurrentLocation}
-                                        zoom ={this.state.zoom}
-                                        mapFocus={this.state.mapFocus} 
-                                        vehicleLocations={this.props.locations}
-                                        selectedStop={this.state.selectedStop} 
-                                        selectStop={this.selectStop} 
-                                        stops={this.state.closeStops} />
-                    </Grid.Column>
-                </Grid>
-            </Container>
+                                            stops={this.state.closeStops} />
+                        </Grid.Column>
+                    </Grid>
+                </div>
             )
         }else if(this.state.closeStops)
         {
             return(
                 <div>
+                    <HeaderContainer />
+
                     <Grid style={{height:"83vh"}} columns={2}>
                         <Grid.Column width={4}>
                             <Segment basic style={{height: window.innerHeight - 130, overflow: "scroll"}}>
@@ -119,7 +121,7 @@ class Home extends React.Component {
 
         }else{
             return(
-                <h1>Loading ...</h1>
+                <Loader />
             )
         }
     }
@@ -137,7 +139,6 @@ class Home extends React.Component {
 
         return (
             <div>
-                <HeaderContainer />
                 {this.renderHomeComponents()}
             </div>
         )

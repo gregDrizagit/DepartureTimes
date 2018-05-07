@@ -35,6 +35,8 @@ class SidebarContainer extends React.Component {
     }
 
     render(){
+        console.log("selected stop", this.props.selectedStop);
+        console.log("props stop", this.props.viewingLocation);
 
         return(
             <div>

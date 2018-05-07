@@ -1,5 +1,5 @@
 import React from 'react' 
-import {setPlace, viewingLocation, isLoading} from './actions'
+import {setPlace, viewingLocation, isLoading, monitoringStop} from './actions'
 import {connect} from 'react-redux'
 import PlacesAutocomplete, { geocodeByPlaceId, getLatLng, geocodeByAddress } from 'react-places-autocomplete'
 import { Segment, Input } from 'semantic-ui-react'
@@ -7,12 +7,19 @@ import {GoogleApiWrapper} from 'google-maps-react';
 
 class LocationInputContainer extends React.Component{
 
-    state = {}
+    state = {
+        input: "City College of San Francisco"
+    }
 
     selectPlace = (address, placeId) => {
         this.getCoordinatesForPlace(address)
         this.props.dispatch(viewingLocation(address))
         this.props.dispatch(isLoading(true))
+        this.props.dispatch(monitoringStop(null))
+    }
+
+    componentDidMount(){
+
     }
 
     getCoordinatesForPlace = (address, placeId) => {

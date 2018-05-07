@@ -5,7 +5,7 @@ const vehiclesData = (state = {
       lon: -122.4511
     }, 
     isShowingVehicles: false,
-    viewingLocation: "City College of San Francisco", 
+    viewingLocation: "...", 
     monitoringStop: "", 
     isLoading: true
 }
