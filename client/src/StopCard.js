@@ -1,5 +1,7 @@
 import React from 'react'
 import { Segment } from 'semantic-ui-react'
+import {selectStop} from './actions'
+import {connect} from 'react-redux'
 
 class StopCard extends React.Component{
     
@@ -7,7 +9,9 @@ class StopCard extends React.Component{
     }
 
     handleSelect = () => { 
-        this.props.selectStop(this.props.stop)
+        // this.props.selectStop(this.props.stop)
+        this.props.dispatch(selectStop({...this.props.stop, zoom: 18}))
+
     }
     
     render(){
@@ -20,4 +24,4 @@ class StopCard extends React.Component{
         )
     }
 }
-export default StopCard
+export default connect()(StopCard);

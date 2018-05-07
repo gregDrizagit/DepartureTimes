@@ -46,7 +46,11 @@ const vehiclesData = (state = {
           ...state,
           isLoading: action.isLoading
         }
-
+        case 'SELECT_STOP':
+        return {
+          ...state,
+          selectedStop: action.selectedStop
+        }
 
       default:
       return state

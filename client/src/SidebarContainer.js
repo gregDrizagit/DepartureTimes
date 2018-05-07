@@ -35,9 +35,8 @@ class SidebarContainer extends React.Component {
     }
 
     render(){
-        console.log("selected stop", this.props.selectedStop);
-        console.log("props stop", this.props.viewingLocation);
-
+   
+        console.log("Sidebar props", this.props)
         return(
             <div>
                 {
@@ -76,7 +75,13 @@ class SidebarContainer extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    return { locations: state.locations, isLoading: state.isLoading, monitoringStop: state.monitoringStop, isShowingVehicles: state.isShowingVehicles, viewingLocation: state.viewingLocation, userCurrentLocation: state.userCurrentLocation }
+    return { locations: state.locations, 
+             isLoading: state.isLoading, 
+             monitoringStop: state.monitoringStop, 
+             isShowingVehicles: state.isShowingVehicles, 
+             viewingLocation: state.viewingLocation, 
+             userCurrentLocation: state.userCurrentLocation,
+             selectedStop: state.selectedStop }
 
   }
 

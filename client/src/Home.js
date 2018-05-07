@@ -65,7 +65,6 @@ class Home extends React.Component {
                                 <SidebardContainer 
                                                 selectedStop={this.state.selectedStop} 
                                                 selectStop={this.selectStop} 
-                                                trackVehicle={this.trackVehicle}
                                                 stops={this.state.closeStops}/>
                             </Segment>
                         </Grid.Column>
@@ -106,16 +105,6 @@ class Home extends React.Component {
                         </Grid.Column>
                     </Grid>
 
-
-                    {/* <Grid divided style={{height:"95vh"}} columns={2}>
-                        <Grid.Column width={4}> 
-                            
-                        </Grid.Column>
-                        <Grid.Column width={12}>
-            
-                         
-                        </Grid.Column>
-                    </Grid> */}
                 </div>
             )
 

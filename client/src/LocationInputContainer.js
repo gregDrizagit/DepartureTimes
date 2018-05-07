@@ -15,7 +15,6 @@ class LocationInputContainer extends React.Component{
         this.getCoordinatesForPlace(address)
         this.props.dispatch(viewingLocation(address))
         this.props.dispatch(isLoading(true))
-        this.props.dispatch(monitoringStop(null))
     }
 
     componentDidMount(){
