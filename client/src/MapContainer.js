@@ -83,6 +83,7 @@ class MapContainer extends React.Component{
     removeMapMarkers = (markers) => {
         
         const onlySelectedStop = markers.find(marker => {
+
                return  marker.props.title === this.props.selectedStop.name
             })
         this.setState({markers: onlySelectedStop, zoom: 15})
@@ -127,7 +128,7 @@ class MapContainer extends React.Component{
     }
 
     render(){
-
+        
         return(
             <div>
                 <Map google={this.props.google} 
@@ -174,7 +175,12 @@ class MapContainer extends React.Component{
 
 const mapStateToProps = (state) => {
 
-     return { locations: state.locations, isLoading: state.isLoading, userCurrentLocation: state.userCurrentLocation, isShowingVehicles: state.isShowingVehicles }
+     return { locations: state.locations, 
+        isLoading: state.isLoading, 
+        userCurrentLocation: state.userCurrentLocation, 
+        isShowingVehicles: state.isShowingVehicles,
+        selectedStop: state.selectedStop
+     }
 
   }
 export default GoogleApiWrapper({
