@@ -12,7 +12,8 @@ class MapContainer extends React.Component{
 
     state= {
         showingInfoWindow: false,
-        zoom: this.props.zoom
+        zoom: this.props.zoom,
+        activeMarker: null
     }
 
 
@@ -52,17 +53,27 @@ class MapContainer extends React.Component{
 
   
     onClick = (props, marker, e) => {
-        this.setState({activeMarker: marker, showingInfoWindow: !this.state.showingInfoWindow, zoom: 18})
-        this.props.stops.forEach(stop => {
-            if(stop.name === props.title) {
+        this.setState({activeMarker: marker, showingInfoWindow:true}) //zoom:18
+            this.props.stops.forEach(stop => {
+                if(stop.name === props.title) {
 
-            //  this.props.selectStop(stop)
-             this.props.dispatch(selectStop({...stop, zoom: 18}))
-             this.props.dispatch(monitoringStop(stop))
+                    this.props.dispatch(selectStop({...stop, zoom: 18}))
+                    this.props.dispatch(monitoringStop(stop))
 
-            }
-        })
+                }
+            })
+        
     }
+
+    onMapClicked = (props) => {
+        if (this.state.showingInfoWindow) {
+          this.setState({
+            showingInfoWindow: false,
+            activeMarker: null
+          })
+        }
+      };
+    
 
     renderVehicleMarkers = (props) => {
 
@@ -100,10 +111,10 @@ class MapContainer extends React.Component{
             return(
                 <InfoWindow
                     marker={this.state.activeMarker}
-                    visible={true}
+                    visible={this.state.showingInfoWindow}
                     >
                     <div>
-                        <h3>{this.props.selectedStop.name} - {this.props.selectedStop.distance} miles away</h3>
+                        this is an info window
                     </div>
                 </InfoWindow>
             )
@@ -130,11 +141,12 @@ class MapContainer extends React.Component{
     }
 
     render(){
-        
+        console.log(this.state)
         return(
             <div>
                 <Map google={this.props.google} 
                     zoom={this.state.zoom}
+                    onClick={this.onMapClicked}
                     style={{height:"95%", width: "95%"}}
                     initialCenter={ {lat: this.props.userCurrentLocation.lat , 
                                      lng: this.props.userCurrentLocation.lon}}
@@ -164,7 +176,16 @@ class MapContainer extends React.Component{
                     }
 
                     
-                    {this.renderInfoWindows()}
+                    {/* {this.renderInfoWindows()} */}
+
+                     <InfoWindow
+                        marker={this.state.activeMarker}
+                        visible={this.state.showingInfoWindow}
+                        >
+                        <div>
+                            this is an info window
+                        </div>
+                     </InfoWindow>
                     
                     {this.state.markers}
                  
