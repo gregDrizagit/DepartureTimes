@@ -36,7 +36,6 @@ class SidebarContainer extends React.Component {
 
     render(){
    
-        console.log("Sidebar props", this.props)
         return(
             <div>
                 {
@@ -44,7 +43,15 @@ class SidebarContainer extends React.Component {
                         <div>
                             <h4>{this.props.selectedStop.name}</h4>
                             <h5>{this.props.selectedStop.distance} miles away.</h5>
-                            <Button onClick={() => this.showDepartureTimes()}>Departure Times</Button>
+                            <Button
+                             onClick={() => this.showDepartureTimes()}>
+                                {
+                                    this.state.showingDepartureTimes ? 
+                                    "Hide Departure Times"
+                                    :
+                                    "Show Departure Times" 
+                                } 
+                             </Button>
                         </div>
                     :
                     null

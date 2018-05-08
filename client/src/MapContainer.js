@@ -3,7 +3,7 @@ import {Map, Marker, InfoWindow, Polyline, GoogleApiWrapper} from 'google-maps-r
 // e05cfc65-e417-4bd6-a48b-859486e2adf6 
 import { Container } from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import { addVehicle, selectStop } from './actions';
+import { addVehicle, selectStop, monitoringStop } from './actions';
 
 
 
@@ -58,6 +58,8 @@ class MapContainer extends React.Component{
 
             //  this.props.selectStop(stop)
              this.props.dispatch(selectStop({...stop, zoom: 18}))
+             this.props.dispatch(monitoringStop(stop))
+
             }
         })
     }

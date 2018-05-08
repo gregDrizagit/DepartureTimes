@@ -69,7 +69,12 @@ class HeaderContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { locations: state.locations, isLoading: state.isLoading, monitoringStop: state.monitoringStop, isShowingVehicles: state.isShowingVehicles, viewingLocation: state.viewingLocation, userCurrentLocation: state.userCurrentLocation }
+    return { locations: state.locations, 
+             isLoading: state.isLoading,
+             monitoringStop: state.monitoringStop, 
+             isShowingVehicles: state.isShowingVehicles, 
+             viewingLocation: state.viewingLocation, 
+             userCurrentLocation: state.userCurrentLocation }
 
   }
 

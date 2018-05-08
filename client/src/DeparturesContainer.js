@@ -64,9 +64,11 @@ class DeparturesContainer extends React.Component {
         if(this.state.departures)
         {
             return(
-                <Segment.Group>
-                    {this.renderDepartureCards()}
-                </Segment.Group>
+                <div style={{paddingTop:20}}>
+                    <Segment.Group>
+                        {this.renderDepartureCards()}
+                    </Segment.Group>
+                </div>
             )
 
         }else{
